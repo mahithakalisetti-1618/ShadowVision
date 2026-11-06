@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Image intelligence{% endblock %}
+{% block content %}
+<section class="hero-section">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow"><span class="status-dot"></span> COMPUTER VISION · IMAGE INTELLIGENCE</div>
+      <h1>Bring every detail<br>out of the <span class="gradient-text">shadows.</span></h1>
+      <p class="hero-lede">Enhance unevenly lit images, reveal meaningful edges, and see objects with pixel-level segmentation — all in one practical computer vision workspace.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="{{ url_for('analysis_page') }}">Start an analysis <span aria-hidden="true">↗</span></a>
+        <a class="button button-quiet" href="{{ url_for('about_page') }}">Explore the methodology <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="hero-footnote"><span class="mini-check">✓</span> Real OpenCV processing <span class="footnote-divider"></span> Local YOLO segmentation</div>
+    </div>
+    <div class="hero-visual" aria-label="Illustration of image enhancement and object segmentation">
+      <div class="visual-orbit orbit-one"></div><div class="visual-orbit orbit-two"></div>
+      <div class="visual-frame">
+        <div class="visual-scene">
+          <div class="scene-sun"></div><div class="scene-hill hill-back"></div><div class="scene-hill hill-front"></div>
+          <div class="scene-building"><span></span><span></span><span></span><span></span></div>
+          <div class="scene-person"><i></i><b></b><em></em></div>
+          <div class="scene-outline outline-person"></div><div class="scene-outline outline-building"></div>
+          <div class="scan-line"></div>
+        </div>
+        <div class="visual-label label-top"><span class="label-pulse"></span> INSTANCE MASK · 98.2%</div>
+        <div class="visual-label label-bottom"><span class="label-swatch"></span> Low light → detail recovered</div>
+        <div class="corner-mark corner-one"></div><div class="corner-mark corner-two"></div>
+      </div>
+      <div class="floating-metric"><span class="metric-icon">◒</span><div><strong>Adaptive</strong><small>luminance recovery</small></div></div>
+      <div class="floating-chip">CV / 01 <span>●</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-intro">
+  <div class="container intro-grid">
+    <div><div class="eyebrow">THE CHALLENGE</div><h2>Bad lighting hides<br><span class="muted-heading">useful information.</span></h2></div>
+    <div class="intro-copy"><p>Shadows and uneven illumination can flatten contrast, obscure boundaries, and make visual inspection difficult. ShadowVision brings classical image processing and modern instance segmentation together in a transparent workflow.</p><a class="text-link" href="{{ url_for('about_page') }}">The project objective <span>→</span></a></div>
+  </div>
+</section>
+
+<section class="section section-features">
+  <div class="container">
+    <div class="section-heading"><div><div class="eyebrow">ONE WORKSPACE · THREE LENSES</div><h2>From pixels to <span class="gradient-text">understanding.</span></h2></div><p>Inspect every stage. Tune the image, identify objects, and explore the masks behind each prediction.</p></div>
+    <div class="feature-grid">
+      <a class="feature-card" href="{{ url_for('analysis_page') }}"><span class="feature-number">01 / ENHANCE</span><span class="feature-icon icon-sun">☼</span><h3>Recover the image</h3><p>Adjust gamma, equalize luminance, apply spatial filters, and inspect edges and local thresholds.</p><span class="feature-arrow">↗</span></a>
+      <a class="feature-card" href="{{ url_for('detection_page') }}"><span class="feature-number">02 / DETECT</span><span class="feature-icon icon-target">⊙</span><h3>Find what matters</h3><p>Run a pretrained YOLO segmentation model and inspect its class labels, confidence, and boxes.</p><span class="feature-arrow">↗</span></a>
+      <a class="feature-card" href="{{ url_for('segmentation_page') }}"><span class="feature-number">03 / SEGMENT</span><span class="feature-icon icon-mask">▧</span><h3>See every instance</h3><p>Review the combined mask overlay and individual binary masks for detected object instances.</p><span class="feature-arrow">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="section technique-section">
+  <div class="container technique-grid">
+    <div><div class="eyebrow">COMPUTER VISION TOOLKIT</div><h2>Classical foundations.<br><span class="muted-heading">Modern perception.</span></h2><p class="body-copy">A hands-on view of image formation and feature extraction, alongside learned object-level understanding.</p><a class="text-link" href="{{ url_for('about_page') }}">Read about the methodology <span>→</span></a></div>
+    <div class="technique-list">
+      <div><span class="tech-index">A</span><span><strong>Intensity &amp; histograms</strong><small>Gamma curves · luminance equalization</small></span><span class="tech-status">PIXEL</span></div>
+      <div><span class="tech-index">B</span><span><strong>Spatial &amp; edge operators</strong><small>Gaussian · median · sharpening · Canny / Sobel</small></span><span class="tech-status">LOCAL</span></div>
+      <div><span class="tech-index">C</span><span><strong>Features &amp; segmentation</strong><small>HOG descriptors · YOLO instance masks</small></span><span class="tech-status">OBJECT</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section applications-section">
+  <div class="container applications-wrap"><div><div class="eyebrow">WHY IT MATTERS</div><h2>Designed for real-world<br><span class="muted-heading">visual challenges.</span></h2></div>
+    <div class="application-pills"><span>Low-light inspection</span><span>Robotics &amp; navigation</span><span>Image understanding</span><span>Learning &amp; evaluation</span></div>
+  </div>
+</section>
+<section class="bottom-cta"><div class="container bottom-cta-inner"><div><div class="eyebrow">READY TO EXPLORE?</div><h2>Start with an image.</h2><p>Upload a photograph and see each computer vision step in action.</p></div><a class="button button-primary" href="{{ url_for('analysis_page') }}">Open image analysis <span aria-hidden="true">↗</span></a></div></section>
+{% endblock %}

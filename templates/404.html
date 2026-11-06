@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Page not found{% endblock %}
+{% block content %}
+<section class="error-page"><div class="container error-inner"><div class="eyebrow"><span class="status-dot"></span> 404 / NOT FOUND</div><h1>That page is<br><span class="gradient-text">out of frame.</span></h1><p>The page you requested doesn't exist. Head back to the project overview or start a new image analysis.</p><div class="hero-actions"><a class="button button-primary" href="{{ url_for('index') }}">Back to overview <span>↗</span></a><a class="button button-quiet" href="{{ url_for('analysis_page') }}">Start analysis <span>→</span></a></div></div></section>
+{% endblock %}

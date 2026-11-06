@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Image segmentation{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container page-hero-inner"><div class="eyebrow"><span class="status-dot"></span> INSTANCE SEGMENTATION / 03</div><h1>Pixel-level <span class="gradient-text">masks.</span></h1><p>Explore YOLO instance segmentation as both a combined overlay and separate binary masks for each detected object.</p></div></section>
+<section class="workspace-section"><div class="container workspace-grid">
+  <aside class="control-panel"><div class="panel-heading"><span class="panel-step">03</span><div><h2>Segment instances</h2><p>One mask per predicted object</p></div></div>
+    <form id="segmentationForm" data-api="/api/segment">
+      <label class="upload-zone" id="segmentationDrop" for="segmentationImage"><input id="segmentationImage" name="image" type="file" accept=".jpg,.jpeg,.png,.bmp,image/jpeg,image/png,image/bmp" required><span class="upload-icon">↑</span><strong>Drop an image here</strong><span>or <u>browse files</u></span><small>JPG, PNG or BMP · max 12 MB</small></label>
+      <div class="preview-strip" id="segmentationPreview" hidden><img alt="Selected image preview"><span class="preview-name"></span><button type="button" class="icon-button remove-file" aria-label="Remove selected image">×</button></div>
+      <div class="control-block"><div class="control-label"><label for="segConfidence">Confidence threshold</label><output id="segConfidenceValue" for="segConfidence">0.25</output></div><p>Controls which object instances receive masks.</p><input id="segConfidence" name="confidence" type="range" min="0.05" max="0.95" step="0.05" value="0.25"></div>
+      <div class="model-note"><span>i</span><p>Missing model weights produce a clear setup error; no detections are fabricated.</p></div>
+      <div class="form-actions"><button class="button button-primary button-full" type="submit"><span class="button-label">Run segmentation</span><span class="button-loader" hidden></span><span aria-hidden="true">↗</span></button><button class="button button-outline button-full" type="reset">Reset</button></div>
+      <div class="notice" role="status" aria-live="polite" hidden></div>
+    </form>
+  </aside>
+  <div class="results-column"><div class="results-topline"><div><div class="eyebrow">SEGMENTATION RESULTS</div><h2>Instance masks</h2></div><span class="result-state" id="segmentationState">AWAITING IMAGE</span></div>
+    <div class="empty-state" id="segmentationEmpty"><div class="empty-visual"><span>▧</span><i></i><b></b></div><h3>Ready to reveal object shapes</h3><p>Each mask comes directly from the model's instance-segmentation output.</p></div>
+    <div class="result-area" id="segmentationResults" hidden>
+      <div class="image-compare-grid"><article class="result-card image-result"><div class="result-card-head"><span>INPUT</span><strong>Original image</strong></div><img id="segOriginal" alt="Original image"></article><article class="result-card image-result"><div class="result-card-head"><span>MASK OVERLAY</span><strong>Segmented instances</strong><a id="segDownload" class="download-link" href="#" download>Download ↧</a></div><img id="segResult" alt="Image with segmentation mask overlays"></article></div>
+      <div class="stat-row"><div class="stat-tile"><small>OBJECTS SEGMENTED</small><strong id="segObjectCount">0</strong><span>instances detected</span></div><div class="stat-tile"><small>PROCESSING TIME</small><strong id="segTime">—</strong><span>seconds · model inference</span></div></div>
+      <article class="result-card object-table-card"><div class="result-card-head"><span>PER-INSTANCE OUTPUT</span><strong>Binary masks</strong></div><div class="mask-grid" id="maskGrid"></div></article>
+      <article class="result-card object-table-card"><div class="result-card-head"><span>MODEL OUTPUT</span><strong>Detected classes</strong></div><div class="object-list" id="segObjectList"></div></article>
+    </div>
+  </div>
+</div></section>
+{% endblock %}

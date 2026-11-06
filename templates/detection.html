@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Object detection{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container page-hero-inner"><div class="eyebrow"><span class="status-dot"></span> OBJECT PERCEPTION / 02</div><h1>Object <span class="gradient-text">detection.</span></h1><p>Locate objects with a pretrained YOLO instance-segmentation model and inspect labels, confidence scores, and bounding boxes.</p></div></section>
+<section class="workspace-section"><div class="container workspace-grid">
+  <aside class="control-panel"><div class="panel-heading"><span class="panel-step">02</span><div><h2>Detect objects</h2><p>Inference runs locally on this server</p></div></div>
+    <form id="detectionForm" data-api="/api/detect">
+      <label class="upload-zone" id="detectionDrop" for="detectionImage"><input id="detectionImage" name="image" type="file" accept=".jpg,.jpeg,.png,.bmp,image/jpeg,image/png,image/bmp" required><span class="upload-icon">↑</span><strong>Drop an image here</strong><span>or <u>browse files</u></span><small>JPG, PNG or BMP · max 12 MB</small></label>
+      <div class="preview-strip" id="detectionPreview" hidden><img alt="Selected image preview"><span class="preview-name"></span><button type="button" class="icon-button remove-file" aria-label="Remove selected image">×</button></div>
+      <div class="control-block"><div class="control-label"><label for="confidence">Confidence threshold</label><output id="confidenceValue" for="confidence">0.25</output></div><p>Predictions below this score are filtered out.</p><input id="confidence" name="confidence" type="range" min="0.05" max="0.95" step="0.05" value="0.25"></div>
+      <div class="model-note"><span>i</span><p>Requires <code>models/yolo11n-seg.pt</code>. See setup instructions in the project README.</p></div>
+      <div class="form-actions"><button class="button button-primary button-full" type="submit"><span class="button-label">Detect objects</span><span class="button-loader" hidden></span><span aria-hidden="true">↗</span></button><button class="button button-outline button-full" type="reset">Reset</button></div>
+      <div class="notice" role="status" aria-live="polite" hidden></div>
+    </form>
+  </aside>
+  <div class="results-column"><div class="results-topline"><div><div class="eyebrow">DETECTION RESULTS</div><h2>Object inventory</h2></div><span class="result-state" id="detectionState">AWAITING IMAGE</span></div>
+    <div class="empty-state" id="detectionEmpty"><div class="empty-visual"><span>⊙</span><i></i><b></b></div><h3>No detections yet</h3><p>Run YOLO on an image to see model-predicted classes and their bounding boxes.</p></div>
+    <div class="result-area" id="detectionResults" hidden>
+      <article class="result-card image-result"><div class="result-card-head"><span>YOLO / PREDICTION</span><strong>Detected objects</strong><a id="detectionDownload" class="download-link" href="#" download>Download ↧</a></div><img id="detectionImageResult" alt="YOLO object detection result"></article>
+      <div class="stat-row"><div class="stat-tile"><small>OBJECTS FOUND</small><strong id="objectCount">0</strong><span>model detections</span></div><div class="stat-tile"><small>IMAGE SIZE</small><strong id="detectionDimensions">—</strong><span>width × height pixels</span></div><div class="stat-tile"><small>INFERENCE TIME</small><strong id="detectionTime">—</strong><span>seconds · model inference</span></div></div>
+      <article class="result-card object-table-card"><div class="result-card-head"><span>DETECTIONS</span><strong>Predicted instances</strong></div><div class="object-list" id="objectList"></div></article>
+    </div>
+  </div>
+</div></section>
+{% endblock %}

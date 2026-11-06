@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Image analytics{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container page-hero-inner"><div class="eyebrow"><span class="status-dot"></span> IMAGE METRICS / 04</div><h1>Measure the <span class="gradient-text">difference.</span></h1><p>Calculate image brightness, dimensions, and actual YOLO detections, then compare color distributions with a Matplotlib histogram.</p></div></section>
+<section class="workspace-section"><div class="container analytics-layout">
+  <aside class="control-panel analytics-controls"><div class="panel-heading"><span class="panel-step">04</span><div><h2>Analyze an image</h2><p>Metrics are calculated from this upload</p></div></div>
+    <form id="analyticsForm" data-api="/api/analytics">
+      <label class="upload-zone" id="analyticsDrop" for="analyticsImage"><input id="analyticsImage" name="image" type="file" accept=".jpg,.jpeg,.png,.bmp,image/jpeg,image/png,image/bmp" required><span class="upload-icon">↑</span><strong>Drop an image here</strong><span>or <u>browse files</u></span><small>JPG, PNG or BMP · max 12 MB</small></label>
+      <div class="preview-strip" id="analyticsPreview" hidden><img alt="Selected image preview"><span class="preview-name"></span><button type="button" class="icon-button remove-file" aria-label="Remove selected image">×</button></div>
+      <div class="control-block"><div class="control-label"><label for="analyticsGamma">Comparison gamma</label><output id="analyticsGammaValue" for="analyticsGamma">1.35</output></div><p>Brightness metrics compare the upload to this gamma-corrected version.</p><input id="analyticsGamma" name="gamma" type="range" min="0.1" max="3" step="0.05" value="1.35"></div>
+      <div class="model-note"><span>i</span><p>Object count and inference time require the configured YOLO model.</p></div>
+      <div class="form-actions"><button class="button button-primary button-full" type="submit"><span class="button-label">Calculate analytics</span><span class="button-loader" hidden></span><span aria-hidden="true">↗</span></button><button class="button button-outline button-full" type="reset">Reset</button></div>
+      <div class="notice" role="status" aria-live="polite" hidden></div>
+    </form>
+  </aside>
+  <div class="results-column"><div class="results-topline"><div><div class="eyebrow">MEASUREMENTS</div><h2>Image report</h2></div><span class="result-state" id="analyticsState">AWAITING IMAGE</span></div>
+    <div class="empty-state" id="analyticsEmpty"><div class="empty-visual"><span>⌁</span><i></i><b></b></div><h3>Your image report starts here</h3><p>Upload an image to calculate pixel statistics and run real model inference.</p></div>
+    <div class="result-area" id="analyticsResults" hidden>
+      <div class="analytics-metrics">
+        <div class="stat-tile"><small>DETECTED OBJECTS</small><strong id="analyticsObjects">—</strong><span>YOLO model output</span></div>
+        <div class="stat-tile"><small>IMAGE DIMENSIONS</small><strong id="analyticsDimensions">—</strong><span>width × height pixels</span></div>
+        <div class="stat-tile"><small>ORIGINAL BRIGHTNESS</small><strong id="analyticsOriginalBrightness">—</strong><span>grayscale mean · 0–255</span></div>
+        <div class="stat-tile"><small>ENHANCED BRIGHTNESS</small><strong id="analyticsEnhancedBrightness">—</strong><span>grayscale mean · 0–255</span></div>
+        <div class="stat-tile"><small>INFERENCE TIME</small><strong id="analyticsTime">—</strong><span>seconds · YOLO model</span></div>
+        <div class="stat-tile"><small>HOG SIMILARITY</small><strong id="analyticsHog">—</strong><span>original vs gamma-corrected</span></div>
+      </div>
+      <article class="result-card chart-card"><div class="result-card-head"><span>INTENSITY ANALYSIS</span><strong>Histogram comparison</strong><small>Original vs enhanced · RGB</small></div><img id="analyticsHistogram" alt="Matplotlib histogram comparing original and enhanced image intensities"></article>
+      <div class="image-compare-grid"><article class="result-card image-result"><div class="result-card-head"><span>INPUT</span><strong>Original image</strong></div><img id="analyticsOriginal" alt="Original image"></article><article class="result-card image-result"><div class="result-card-head"><span>GAMMA TRANSFORM</span><strong>Enhanced image</strong></div><img id="analyticsEnhanced" alt="Gamma-corrected image"></article></div>
+    </div>
+  </div>
+</div></section>
+{% endblock %}

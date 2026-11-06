@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Image analysis{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container page-hero-inner"><div class="eyebrow"><span class="status-dot"></span> PROCESSING WORKSPACE / 01</div><h1>Image <span class="gradient-text">enhancement.</span></h1><p>Recover details from uneven illumination, then inspect spatial, edge, threshold, and HOG outputs side by side.</p></div></section>
+<section class="workspace-section"><div class="container workspace-grid">
+  <aside class="control-panel">
+    <div class="panel-heading"><span class="panel-step">01</span><div><h2>Configure analysis</h2><p>JPG · PNG · BMP / up to 12 MB</p></div></div>
+    <form id="analysisForm" data-api="/api/enhance">
+      <label class="upload-zone" id="analysisDrop" for="analysisImage"><input id="analysisImage" name="image" type="file" accept=".jpg,.jpeg,.png,.bmp,image/jpeg,image/png,image/bmp" required><span class="upload-icon">↑</span><strong>Drop an image here</strong><span>or <u>browse files</u></span><small>JPG, PNG or BMP · max 12 MB</small></label>
+      <div class="preview-strip" id="analysisPreview" hidden><img alt="Selected image preview"><span class="preview-name"></span><button type="button" class="icon-button remove-file" aria-label="Remove selected image">×</button></div>
+      <div class="control-block"><div class="control-label"><label for="gamma">Gamma correction</label><output id="gammaValue" for="gamma">1.35</output></div><p>Lift darker tones with a power-law transform.</p><input id="gamma" name="gamma" type="range" min="0.1" max="3" step="0.05" value="1.35"></div>
+      <label class="check-row"><input type="checkbox" name="equalize" value="true"><span class="check-custom"></span><span><strong>Equalize luminance histogram</strong><small>Redistribute intensity contrast</small></span></label>
+      <div class="control-block"><label class="field-label" for="spatialFilter">Spatial filter</label><select id="spatialFilter" name="filter"><option value="none">No spatial filter</option><option value="gaussian">Gaussian smoothing</option><option value="median">Median smoothing</option><option value="bilateral">Bilateral smoothing</option><option value="sharpen">Sharpening kernel</option></select><p>Smoothing reduces noise; sharpening emphasizes detail.</p></div>
+      <div class="control-block"><label class="field-label" for="edgeMethod">Edge detection</label><select id="edgeMethod" name="edge_method"><option value="canny">Canny edges</option><option value="sobel">Sobel gradient</option><option value="none">Skip edge output</option></select><p>Adaptive Gaussian thresholding is also computed.</p></div>
+      <div class="form-actions"><button class="button button-primary button-full" type="submit"><span class="button-label">Apply enhancement</span><span class="button-loader" hidden></span><span aria-hidden="true">↗</span></button><button class="button button-outline button-full" type="reset">Reset controls</button></div>
+      <div class="notice" role="status" aria-live="polite" hidden></div>
+    </form>
+  </aside>
+  <div class="results-column">
+    <div class="results-topline"><div><div class="eyebrow">ANALYSIS RESULTS</div><h2>Image workspace</h2></div><span class="result-state" id="analysisState">AWAITING IMAGE</span></div>
+    <div class="empty-state" id="analysisEmpty"><div class="empty-visual"><span>▧</span><i></i><b></b></div><h3>Your results will appear here</h3><p>Upload an image and apply enhancement to compare the original with its processed outputs.</p></div>
+    <div class="result-area" id="analysisResults" hidden>
+      <div class="image-compare-grid"><article class="result-card image-result"><div class="result-card-head"><span>01</span><strong>Original</strong><small id="analysisDimensions"></small></div><img id="originalResult" alt="Uploaded original"></article><article class="result-card image-result"><div class="result-card-head"><span>02</span><strong>Enhanced</strong><a id="enhancedDownload" class="download-link" href="#" download>Download ↧</a></div><img id="processedResult" alt="Enhanced output"></article></div>
+      <div class="stat-row"><div class="stat-tile"><small>ORIGINAL BRIGHTNESS</small><strong id="originalBrightness">—</strong><span>grayscale mean · 0–255</span></div><div class="stat-tile"><small>ENHANCED BRIGHTNESS</small><strong id="enhancedBrightness">—</strong><span>grayscale mean · 0–255</span></div><div class="stat-tile"><small>PROCESSING TIME</small><strong id="enhancementTime">—</strong><span>seconds · enhancement + features</span></div><div class="stat-tile"><small>HOG SIMILARITY</small><strong id="hogSimilarity">—</strong><span id="hogCount">shape descriptor</span></div></div>
+      <div class="output-grid"><article class="result-card" id="edgeCard"><div class="result-card-head"><span>03</span><strong>Edge map</strong></div><img id="edgeResult" alt="Detected image edges"></article><article class="result-card"><div class="result-card-head"><span>04</span><strong>Adaptive threshold</strong></div><img id="thresholdResult" alt="Adaptive threshold output"></article><article class="result-card"><div class="result-card-head"><span>05</span><strong>HOG visualization</strong></div><img id="hogResult" alt="Histogram of oriented gradients visualization"></article></div>
+      <article class="result-card chart-card"><div class="result-card-head"><span>06</span><strong>Histogram comparison</strong><small>RGB intensity · Matplotlib</small></div><img id="histogramResult" alt="Original and enhanced color histograms"></article>
+    </div>
+  </div>
+</div></section>
+{% endblock %}
